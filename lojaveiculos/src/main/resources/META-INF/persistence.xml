@@ -13,8 +13,9 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd" version="2.2">
             <property name="javax.persistence.sql-load-script-source" value="META-INF/dados-iniciais.sql" />
 
             <property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect" />
-            <property name="hibernate.show_sql" value="false" />
-            <property name="hibernate.format_sql" value="false" />
+            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.format_sql" value="true" />
+
             <property name="org.hibernate.SQL" value="false" />
             <property name="org.hibernate.tool.hbm2ddl" value="false" />
             <property name="org.hibernate.pretty" value="false" />
