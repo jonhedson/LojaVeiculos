@@ -1,21 +1,53 @@
 package pos.java.jpa.dominio;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "tab_veiculo")
 public class Veiculo {
 
+    @ManyToMany
+    @JoinTable(name = "tab_veiculo_acessorio", joinColumns = @JoinColumn(name = "veiculo_codigo"), inverseJoinColumns = @JoinColumn(name = "acessorio_codigo"))
+    private Set<Acessorio> acessorios = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "proprietario_codigo")
+    private Proprietario proprietario;
+
+    public enum TipoCombustivel {
+        ALCOOL, GASOLINA, DIESEL, BICOMBUSTIVEL
+    }
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "tipo_combustivel", nullable = false)
+    private TipoCombustivel tipoCombustivel;
+
+    @Temporal(TemporalType.DATE)
+    @Column(name = "data_cadastro", nullable = false)
+    private Date dataCadastro;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long codigo;
+
     @Column(length = 60, nullable = false)
     private String fabricante;
 
@@ -102,6 +134,38 @@ public class Veiculo {
         } else if (!codigo.equals(other.codigo))
             return false;
         return true;
+    }
+
+    public TipoCombustivel getTipoCombustivel() {
+        return tipoCombustivel;
+    }
+
+    public void setTipoCombustivel(TipoCombustivel tipoCombustivel) {
+        this.tipoCombustivel = tipoCombustivel;
+    }
+
+    public Date getDataCadastro() {
+        return dataCadastro;
+    }
+
+    public void setDataCadastro(Date dataCadastro) {
+        this.dataCadastro = dataCadastro;
+    }
+
+    public Proprietario getProprietario() {
+        return proprietario;
+    }
+
+    public void setProprietario(Proprietario proprietario) {
+        this.proprietario = proprietario;
+    }
+
+    public Set<Acessorio> getAcessorios() {
+        return acessorios;
+    }
+
+    public void setAcessorios(Set<Acessorio> acessorios) {
+        this.acessorios = acessorios;
     }
 
 }
